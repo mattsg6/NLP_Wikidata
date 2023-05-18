@@ -23,16 +23,16 @@ def get_results(endpoint_url, query):
     sparql.setReturnFormat(JSON)
     return sparql.query().convert()
 
+def wikidata_query(endpoint_url, query):
+    results = get_results(endpoint_url, query)
 
-results = get_results(endpoint_url, query)
+    format = []
+    for result in results["results"]["bindings"]:
+        keys = list(result.keys())
+        temp = {}
+        for k in keys:
+            temp[k] = result[k]['value']
 
-format = []
-for result in results["results"]["bindings"]:
-    keys = list(result.keys())
-    temp = {}
-    for k in keys:
-        temp[k] = result[k]['value']
+        format.append(temp)
 
-    format.append(temp)
-
-print(format)
+    return format

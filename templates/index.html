@@ -14,9 +14,148 @@
       crossorigin="anonymous"
     />
 
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f5f5f5;
+        text-align: center;
+      }
+
+      h1,
+      p {
+        text-align: center;
+      }
+
+      .container {
+        width: 85vw;
+        height: 66vh;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 20px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+        position: absolute;
+        top:0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        
+        margin: auto;
+      }
+
+      input[type="text"] {
+        width: 60vw;
+        padding: 10px;
+        font-size: 16px;
+      }
+
+      .btn {
+        margin-left: 1rem;
+        padding: 10px 15px;
+        font-size: 16px;
+        background-color: #9da8db;
+        border: none;
+        color: white;
+        cursor: pointer;
+      }
+
+      .btn:not([href]):not([class]) {
+        color: white;
+        text-decoration: none;
+      }
+
+      .btn:hover, .btn:not([href]):not([class]):hover {
+        transition: 0.25s;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #9da8db;
+        background-color: white;
+        color: #9da8db;
+      }
+
+      
+
+      .input-container {
+        display: flex;
+        justify-content: center;
+      }
+
+      form {
+        display: flex;
+        position: absolute;
+        bottom: 20px;
+        margin: auto;
+      }
+
+      .content {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .box {
+        padding: 10px;
+        margin: 1rem;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 2rem;
+        border-color: black;
+      }
+    </style>
+
     <title>Wikifilm</title>
   </head>
   <body>
-    <h1>Home</h1>
+      <div class="container">
+        <h1>Wikifilm Search</h1>
+        <div class="content">
+          <div class="box">
+            What are the films that Alfred Hitchcock has directed?
+          </div>
+          <div class="box">
+            Who starred in Edgar Wright's last film?
+          </div>
+          <div class="box">
+            Which films did Robert De Niro and Al Pacino perform in together?
+          </div>
+          <div class="box">
+            Who are the directors of the 1950s?
+          </div>
+          <div class="box">
+            Who did the cinematography on the highest grossing film of the 90s?
+          </div>
+          <div class="box">
+            What is the first film Adèle Haenel starred in?
+          </div>
+        </div>
+        <div class="input-container">
+          <form id="input">
+            <input type="text" id="questionInput" placeholder="Ask a question about a film" />
+            <div class="btn" id="submit-btn">Submit</div>
+          </form>
+        </div>
+      </div>
   </body>
+  <script>
+    var submitBtn = document.getElementById('submit-btn')
+    submitBtn.addEventListener('click', upload)
+
+    function upload() {
+      var q = document.getElementById('questionInput').value
+
+      $.ajax({
+        type: "POST",
+        url: '/question',
+        contentType: 'application/json',
+        data: JSON.stringify({question: q}),
+        success: function(res) {
+          console.log(res);
+          window.location.replace(window.location.origin + res)
+        }
+      })
+      
+    }
+  </script>
 </html>

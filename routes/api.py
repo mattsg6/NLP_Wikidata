@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, request
+import requests
 from scripts.wikidata import wikidata_query
 
 api = Blueprint('api', __name__)
@@ -30,3 +31,9 @@ SELECT ?film ?cinematographer WHERE {
     payload = wikidata_query(endpoint_url=endpoint_url, query=query)
 
     return render_template('results.html', res = payload, question=question)
+
+@api.route('/question', methods=['POST'])
+def process():
+    print(request.json)
+
+    return url_for('api.res')
